@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+
+<struts-config>
+    <form-beans>
+        <form-bean name="transfer" type="com.myapp.struts.transfer"/>
+        <form-bean name="confirm" type="com.myapp.struts.confirm"/>
+        <form-bean name="show_details" type="com.myapp.struts.show_details"/>
+        <form-bean name="confirmAction" type="com.myapp.struts.confirmAction"/>
+        <form-bean name="confirm" type="com.myapp.struts.confirm"/>
+        <form-bean name="admin_login" type="com.myapp.struts.admin_login"/>
+        <form-bean name="admin_login" type="com.myapp.struts.admin_login"/>
+        <form-bean name="edit_info" type="com.myapp.struts.edit_info"/>
+        <form-bean name="update_info" type="com.myapp.struts.update_info"/>
+        <form-bean name="user_reg" type="com.myapp.struts.user_reg"/>
+        <form-bean name="user_login" type="com.myapp.struts.user_login"/>
+    
+    </form-beans>
+    
+    <global-exceptions>
+    
+    </global-exceptions>
+
+    <global-forwards>
+        <forward name="welcome"  path="/Welcome.do"/>
+    </global-forwards>
+
+    <action-mappings>
+        <action input="/" name="user_login" path="/user_login" scope="request" type="com.myapp.struts.user_loginAction" validate="false">
+            <forward name="s" path="/user_dashBoard.jsp"/>
+            <forward name="f" path="/index.jsp?sts=failed"/>
+          
+        </action>
+        <action name="user_reg" path="/user_reg" scope="request" type="com.myapp.struts.user_regAction" validate="false">
+            <forward name="success" path="/reg_success.html"/>
+        </action>
+        <action name="edit_info" path="/edit_info" scope="request" type="com.myapp.struts.edit_infoAction" validate="false">
+            <forward name="success" path="/update_info.jsp?sts=success"/>
+            <forward name="faliure" path="/update_info.jsp?sts=failed"/>
+        </action>
+        <action name="admin_login" path="/admin_login" scope="request" type="com.myapp.struts.admin_loginAction" validate="false">
+            <forward name="success" path="/admin_dashboard.jsp"/>
+            <forward name="failed" path="/admin_login.jsp?sts=fail"/>
+        </action>
+        <action name="show_details" path="/show_details" scope="request" type="com.myapp.struts.show_detailsAction" validate="false">
+            <forward name="success" path="/reg_details.jsp"/>
+        </action>
+        <action input="reg_details" name="confirm" path="/confirm" scope="request" type="com.myapp.struts.confirmAction" validate="false">
+            <forward name="success" path="/admin_dashboard.jsp"/>
+        </action>
+        <action name="transfer" path="/transfer" scope="request" type="com.myapp.struts.transferAction" validate="false">
+            <forward name="success" path="/user_dashBoard.jsp"/>
+            <forward name="failure" path="/transfer.jsp"/>
+        </action>
+        
+        
+        
+        
+        
+        
+        
+        
+    </action-mappings>
+    
+    <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+
+    <message-resources parameter="com/myapp/struts/ApplicationResource"/>    
+    
+    <!-- ========================= Tiles plugin ===============================-->
+    <!--
+    This plugin initialize Tiles definition factory. This later can takes some
+    parameters explained here after. The plugin first read parameters from
+    web.xml, thenoverload them with parameters defined here. All parameters
+    are optional.
+    The plugin should be declared in each struts-config file.
+    - definitions-config: (optional)
+    Specify configuration file names. There can be several comma
+    separated file names (default: ?? )
+    - moduleAware: (optional - struts1.1)
+    Specify if the Tiles definition factory is module aware. If true
+    (default), there will be one factory for each Struts module.
+    If false, there will be one common factory for all module. In this
+    later case, it is still needed to declare one plugin per module.
+    The factory will be initialized with parameters found in the first
+    initialized plugin (generally the one associated with the default
+    module).
+    true : One factory per module. (default)
+    false : one single shared factory for all modules
+    - definitions-parser-validate: (optional)
+    Specify if xml parser should validate the Tiles configuration file.
+    true : validate. DTD should be specified in file header (default)
+    false : no validation
+
+    Paths found in Tiles definitions are relative to the main context.
+    -->
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />      
+        <set-property property="moduleAware" value="true" />
+    </plug-in>
+    
+    <!-- ========================= Validator plugin ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property
+            property="pathnames"
+            value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+    </plug-in>
+  
+</struts-config>
